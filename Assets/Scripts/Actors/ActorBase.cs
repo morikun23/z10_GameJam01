@@ -17,7 +17,7 @@ namespace Z10 {
 		public int m_hp;
 
 		//移動速度
-		public int m_speed;
+		public float m_speed;
 
 		//攻撃力
 		public int m_power;
@@ -31,12 +31,8 @@ namespace Z10 {
 		//現在向いている方向
 		public Direction m_direction;
 
-		//自身のプレハブ
-		[SerializeField]
-		protected GameObject m_prefab;
-
-		//生成されたプレハブ（実体）
-		protected GameObject m_object;
+		//現在いる階層
+		public int m_currentFloor;
 
 		/// <summary>
 		/// 初期化
