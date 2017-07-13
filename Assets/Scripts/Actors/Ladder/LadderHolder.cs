@@ -45,7 +45,7 @@ namespace Z10 {
 			Ladder ladder = FindFreeLadder();
 			if (!ladder) return;
 
-			float vertical = (arg_floor - 2) * 3;
+			float vertical = 0.1f + (arg_floor - 2) * 3;
 			ladder.transform.position = new Vector3(arg_horizontal , vertical);
 			ladder.SetActive(true);
 		}

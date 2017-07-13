@@ -8,29 +8,32 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace Z10 {
-	public class Player : ActorBuddy {
+	public class Player : LadderUser{
 
 		//プレハブファイルのパス
 		public const string PREFAB_PASS = "Prefabs/Actor/Player";
-
-		//現在の状態（Stateパターンにて実装）
-		public IPlayerState m_currentState { get; private set; }
-
+		
 		//梯子
 		public LadderHolder m_ladderHolder { get; private set; }
 
 		private PlayerViewer m_viewer { get; set; }
 
+		//タスク
+		private IActorCommand m_command { get; set; }
+		
 		/// <summary>
 		/// 初期化
 		/// </summary>
 		public override void Initialize() {
+			m_width = GetComponent<BoxCollider2D>().bounds.size.x;
+			m_height = GetComponent<BoxCollider2D>().bounds.size.y;
+
 			m_ladderHolder = new GameObject("Ladders").AddComponent<LadderHolder>();
 			m_ladderHolder.Initialize();
-			m_currentState = new PlayerIdle();
-			m_currentState.OnEnter(this);
 			m_viewer = GetComponent<PlayerViewer>();
 			m_viewer.Initialize(this);
+
+			m_command = null;
 		}
 
 		/// <summary>
@@ -40,26 +43,95 @@ namespace Z10 {
 
 			
 
-			if (Input.GetKeyDown(KeyCode.Space)) {
-				StateTransition(new PlayerPut());
+			if (IsLadderUseFul()) {
+				if (IsLadderUsing()) { m_currentLadderStatus = LadderStatus.USING; }
+				else { m_currentLadderStatus = LadderStatus.USEFUL; }
+			}
+			else { m_currentLadderStatus = LadderStatus.FREE; }
+
+			switch (m_currentLadderStatus) {
+				case LadderStatus.USEFUL: OnLadderIsUseful(); break;
+				case LadderStatus.USING: OnLadderisUsing(); break;
+				case LadderStatus.FREE: OnLadderIsFree(); break;
 			}
 
-			m_currentState.OnUpdate(this);
-			m_viewer.UpdateByFrame(this);
+			if(m_command != null) {
+				m_command.OnUpdate(this);
+				m_command = null;
+			}
 		}
 
 		/// <summary>
-		/// 状態の遷移
+		/// 梯子が使用可能なときを処理する
 		/// </summary>
-		/// <param name="arg_nextState"></param>
-		public void StateTransition(IPlayerState arg_nextState) {
-			m_currentState.OnExit(this);
-			m_currentState = arg_nextState;
-			m_currentState.OnEnter(this);
+		private void OnLadderIsUseful() {
+			//右移動
+			if (Input.GetKey(KeyCode.RightArrow)) {
+				m_command = new RunRightCommand();
+			}
+			//左移動
+			if (Input.GetKey(KeyCode.LeftArrow)) {
+				m_command = new RunLeftCommand();
+			}
+			//上昇開始
+			if (Input.GetKeyDown(KeyCode.UpArrow)) {
+				m_command = new GoUpstairsCommand();
+			}
+			//下降開始
+			if (Input.GetKeyDown(KeyCode.DownArrow)) {
+				m_command = new GoDownstairsCommand();
+			}
 		}
 
-		void OnTriggerEnter2D(Collider2D arg_colliderInfo) {
+		/// <summary>
+		/// 梯子を使用中なときを処理する
+		/// </summary>
+		private void OnLadderisUsing() {
+			if (Input.GetKey(KeyCode.UpArrow)) {
+				if (IsCeiled()) {
+					m_command = new ClimbCommand();
+				}
+				else {
+					m_command = new UpstairsCommand();
+				}
+			}
 
+			if (Input.GetKey(KeyCode.DownArrow)) {
+				if (IsGrounded()) {
+					m_command = new LandCommand();
+				}
+				else {
+					m_command = new DownstairsCommand();
+				}
+			}
+
+			
+
+		}
+
+		/// <summary>
+		/// 梯子を使用していないとき
+		/// </summary>
+		private void OnLadderIsFree() {
+			//右移動
+			if (Input.GetKey(KeyCode.RightArrow)) {
+				m_command = new RunRightCommand();
+			}
+			//左移動
+			if (Input.GetKey(KeyCode.LeftArrow)) {
+				m_command = new RunLeftCommand();
+			}
+
+			if (Input.GetKeyDown(KeyCode.Space)) {
+				this.PutLadder();
+			}
+		}
+
+		/// <summary>
+		/// 梯子を置く
+		/// </summary>
+		private void PutLadder() {
+			m_ladderHolder.PutLadder(m_currentFloor , transform.position.x);
 		}
 		
 	}

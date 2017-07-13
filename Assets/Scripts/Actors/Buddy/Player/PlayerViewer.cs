@@ -16,7 +16,6 @@ namespace Z10 {
 
 		public void UpdateByFrame(Player arg_player) {
 			ViewDirection(arg_player.m_direction);
-			ViewStateAnimation(arg_player.m_currentState);
 		}
 
 		private void ViewDirection(ActorBase.Direction arg_direction) {
@@ -30,14 +29,7 @@ namespace Z10 {
 			}
 		}
 
-		private void ViewStateAnimation(IPlayerState arg_currentState) {
-			
-			if (arg_currentState.GetType() == typeof(PlayerIdle)) {
-				m_animator.Play("Idle");
-			}
-			if(arg_currentState.GetType() == typeof(PlayerMove)) {
-				m_animator.Play("Run");
-			}
+		private void ViewStateAnimation() {
 
 		}
 	}

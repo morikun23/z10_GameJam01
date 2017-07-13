@@ -22,6 +22,12 @@ namespace Z10 {
 		//攻撃力
 		public int m_power;
 
+		//幅
+		public float m_width;
+
+		//高さ
+		public float m_height;
+
 		//向き
 		public enum Direction {
 			LEFT = -1,
