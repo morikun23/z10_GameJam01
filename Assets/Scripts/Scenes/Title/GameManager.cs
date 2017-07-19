@@ -41,8 +41,11 @@ namespace Z10.Title {
 
         TitleState state;
 
-		// Use this for initialization
-		void Start() {
+
+        public AudioClip doron,logorota,syakiiin;
+
+        // Use this for initialization
+        void Start() {
             //SpriteRendererを取得
             m_titleNinjaSP = m_titleNinja.GetComponent<SpriteRenderer>();
             m_ladderSP = m_ladder.GetComponent<SpriteRenderer>();
@@ -64,6 +67,8 @@ namespace Z10.Title {
 
             //忍者の演出から
             state = TitleState.ninja;
+
+            AudioSource.PlayClipAtPoint(doron, Camera.main.transform.position);
         }
 
 		// Update is called once per frame
@@ -75,6 +80,8 @@ namespace Z10.Title {
             {
 
                 case TitleState.ninja:
+                    
+
                     m_titleNinjaSP.color += new Color(0, 0, 0, Time.deltaTime);
                     m_titleNinja.transform.position = Vector3.Lerp(m_titleNinja.transform.position,
                                                                     m_startPosNinja,
@@ -85,6 +92,7 @@ namespace Z10.Title {
                         m_titleNinja.transform.position = m_startPosNinja;
                         m_titleNinjaSP.color = new Color(1, 1, 1, 1);
 
+                        AudioSource.PlayClipAtPoint(doron, Camera.main.transform.position);
                         state = TitleState.hasigo;
                     }
                     break;
@@ -113,6 +121,11 @@ namespace Z10.Title {
                                                                 Time.deltaTime * 2);
                     m_logo.transform.Rotate(0, 0, 30);
 
+                    if(m_logo.transform.rotation.eulerAngles.z % 20 == 0)
+                    {
+                        AudioSource.PlayClipAtPoint(logorota, Camera.main.transform.position);
+                    }
+
                     if (Vector3.Distance(m_logo.transform.localScale, m_startLogoSize) < 0.1f)
                     {
                         Flash();
@@ -120,6 +133,7 @@ namespace Z10.Title {
                         m_logo.transform.localScale = m_startLogoSize;
                         m_logo.transform.rotation = Quaternion.Euler(0,0,0);
 
+                        
                         state = TitleState.toInput;
                     }
 
@@ -151,6 +165,8 @@ namespace Z10.Title {
         //フラッシュ
         void Flash()
         {
+            AudioSource.PlayClipAtPoint(syakiiin, Camera.main.transform.position);
+            GetComponent<AudioSource>().Play();
             m_flash.color = new Color(1, 1, 1, 1);
         }
         
