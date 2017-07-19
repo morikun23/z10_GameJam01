@@ -19,7 +19,7 @@ namespace Z10 {
 		private PlayerViewer m_viewer { get; set; }
 
 		//タスク
-		private IActorCommand m_command { get; set; }
+		public IActorCommand m_command { get; set; }
 		
 		/// <summary>
 		/// 初期化
@@ -41,7 +41,7 @@ namespace Z10 {
 		/// </summary>
 		public override void UpdateByFrame() {
 
-			
+			m_currentFloor = Stage.GetCurrentFloor(transform.position.y);
 
 			if (IsLadderUseFul()) {
 				if (IsLadderUsing()) { m_currentLadderStatus = LadderStatus.USING; }
@@ -55,7 +55,11 @@ namespace Z10 {
 				case LadderStatus.FREE: OnLadderIsFree(); break;
 			}
 
-			if(m_command != null) {
+			//描画
+			m_viewer.UpdateByFrame(this);
+
+			//コマンドの実行
+			if (m_command != null) {
 				m_command.OnUpdate(this);
 				m_command = null;
 			}
@@ -81,6 +85,12 @@ namespace Z10 {
 			if (Input.GetKeyDown(KeyCode.DownArrow)) {
 				m_command = new GoDownstairsCommand();
 			}
+		
+
+			//梯子を取り除く
+			if (Input.GetKeyDown(KeyCode.Z)) {
+				RemoveLadder(FindLadderFromUp());
+			}
 		}
 
 		/// <summary>
@@ -104,9 +114,6 @@ namespace Z10 {
 					m_command = new DownstairsCommand();
 				}
 			}
-
-			
-
 		}
 
 		/// <summary>
@@ -132,6 +139,11 @@ namespace Z10 {
 		/// </summary>
 		private void PutLadder() {
 			m_ladderHolder.PutLadder(m_currentFloor , transform.position.x);
+		}
+
+		private void RemoveLadder(Ladder arg_ladder) {
+			if (arg_ladder == null) return;
+			m_ladderHolder.RemoveLadder(arg_ladder);
 		}
 		
 	}

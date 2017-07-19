@@ -7,9 +7,10 @@ namespace Z10 {
 
 		public void OnUpdate(LadderUser arg_actor) {
 
-			if (arg_actor.m_currentFloor < 3) {
-				arg_actor.m_currentFloor += 1;
-			}
+			//上にある梯子を取得
+			Ladder ladder = arg_actor.FindLadderFromUp();
+
+			arg_actor.transform.position = new Vector3(ladder.transform.position.x , arg_actor.transform.position.y , 0);
 
 			arg_actor.ToLadder();
 			arg_actor.transform.position += Vector3.up * arg_actor.m_speed / 2;
