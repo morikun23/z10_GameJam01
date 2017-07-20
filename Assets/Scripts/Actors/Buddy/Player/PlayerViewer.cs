@@ -16,7 +16,7 @@ namespace Z10 {
 
 		public void UpdateByFrame(Player arg_player) {
 			ViewDirection(arg_player.m_direction);
-			ViewStateAnimation(arg_player.m_command);
+
 		}
 
 		private void ViewDirection(ActorBase.Direction arg_direction) {

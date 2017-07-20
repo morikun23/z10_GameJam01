@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Z10 {
 	public interface IActorCommand {
 
-		void OnUpdate(LadderUser arg_ladder);
-		
+		void Execute(LadderUser arg_actor);
+		void Undo(LadderUser arg_actor);
 	}
 }

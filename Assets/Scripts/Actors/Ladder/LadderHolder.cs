@@ -5,6 +5,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 namespace Z10 {
 	public class LadderHolder : MonoBehaviour {
@@ -41,13 +42,15 @@ namespace Z10 {
 		/// </summary>
 		/// <param name="arg_floor">置く階</param>
 		/// <param name="arg_horizontal">置くx座標</param>
-		public void PutLadder(int arg_floor , float arg_horizontal) {
+		public Ladder PutLadder(int arg_floor , float arg_horizontal) {
 			Ladder ladder = FindFreeLadder();
-			if (!ladder) return;
-
-			float vertical = 0.1f + (arg_floor - 2) * 3;
-			ladder.transform.position = new Vector3(arg_horizontal , vertical);
-			ladder.SetActive(true);
+			if (ladder) {
+				float vertical = -3f + (arg_floor - 1) * 3;
+				ladder.transform.position = new Vector3(arg_horizontal , vertical);
+				ladder.m_currentFloor = arg_floor;
+				ladder.SetActive(true);
+			}
+			return ladder;
 		}
 
 		/// <summary>
