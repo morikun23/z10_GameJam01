@@ -33,14 +33,16 @@ namespace Z10 {
 			}
 
 			if (Input.GetKeyDown(arg_actor.m_upKey)) {
-				if (arg_actor.FindLadderFromUp()) {
-					arg_actor.StateTransition(new BuddyUpstairsState());
+				Ladder ladder = arg_actor.FindLadderFromUp();
+				if (ladder) {
+					arg_actor.StateTransition(new BuddyUpstairsState(ladder));
 					return;
 				}
 			}
 			if (Input.GetKeyDown(arg_actor.m_downKey)) {
-				if (arg_actor.FindLadderFromDown()) {
-					arg_actor.StateTransition(new BuddyDownstairsState());
+				Ladder ladder = arg_actor.FindLadderFromDown();
+				if (ladder) {
+					arg_actor.StateTransition(new BuddyDownstairsState(ladder));
 					return;
 				}
 			}

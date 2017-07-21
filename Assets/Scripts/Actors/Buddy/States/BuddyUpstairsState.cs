@@ -16,6 +16,13 @@ namespace Z10 {
 
 		private Stack<IActorCommand> m_task;
 
+		private Ladder m_ladder;
+
+		public BuddyUpstairsState(Ladder arg_ladder) {
+			m_ladder = arg_ladder;
+		}
+
+
 		/// <summary>
 		/// ステート開始時に一度だけ呼ばれる
 		/// </summary>
@@ -24,6 +31,8 @@ namespace Z10 {
 			m_task = new Stack<IActorCommand>();
 			m_floorBuf = arg_actor.m_currentFloor;
 			m_currentFrame = 0;
+			arg_actor.m_isLadderUsing = true;
+			arg_actor.transform.position = new Vector3(m_ladder.transform.position.x , arg_actor.transform.position.y);
 		}
 
 		/// <summary>
@@ -64,6 +73,7 @@ namespace Z10 {
 		public void OnExit(ActorBuddy arg_actor) {
 			m_task.Clear();
 			m_task = null;
+			arg_actor.m_isLadderUsing = false;
 		}
 	}
 }

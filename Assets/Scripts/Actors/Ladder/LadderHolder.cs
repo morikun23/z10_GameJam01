@@ -14,7 +14,7 @@ namespace Z10 {
 		private List<Ladder> m_ladders;
 
 		//最大の梯子数
-		public const int LADDER_COUNT = 2;
+		public const int LADDER_COUNT = 3;
 
 		/// <summary>
 		/// 初期化

@@ -42,8 +42,6 @@ namespace Z10 {
 			View();
 		}
 
-		
-
 		/// <summary>
 		/// 描画を行う
 		/// </summary>
