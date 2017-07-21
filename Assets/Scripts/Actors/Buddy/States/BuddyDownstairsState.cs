@@ -45,7 +45,7 @@ namespace Z10 {
 			//下キーで降りる
 			if (Input.GetKey(arg_actor.m_downKey)) {
 				m_currentFrame += 1;
-				m_task.Push(new DownstairsCommand(arg_actor));
+				m_task.Push(new DownstairsCommand(arg_actor,FRAME,m_currentFrame));
 				m_task.Peek().Execute(arg_actor);
 				if (m_currentFrame >= FRAME) {
 					arg_actor.m_currentFloor -= 1;

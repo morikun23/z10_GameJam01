@@ -13,17 +13,25 @@ namespace Z10 {
 
 		//座標のバッファ
 		private Vector2 m_positionBuf;
-		
+
+		//フレーム数
+		private int m_frame;
+
+		//現在のフレーム
+		private int m_currentFrame;
+
 		/// <summary>
 		/// コンストラクタ
 		/// 初期化を行う
 		/// </summary>
 		/// <param name="arg_actor"></param>
-		public UpstairsCommand(LadderUser arg_actor) {
+		public UpstairsCommand(LadderUser arg_actor , int arg_frame , int arg_currentFrame) {
 			int m_currentFloor = arg_actor.m_currentFloor;
-			m_startPosition = new Vector2(m_startPosition.x , (-3.75f + (m_currentFloor - 1) * 2.95f));
-			m_destination = new Vector2(m_startPosition.x,(-3.75f + (m_currentFloor + 1 - 1) * 2.95f));
+			m_startPosition = new Vector2(arg_actor.transform.position.x , (-3.75f + (m_currentFloor - 1) * 2.95f));
+			m_destination = new Vector2(arg_actor.transform.position.x,(-3.75f + (m_currentFloor + 1 - 1) * 2.95f));
 			m_positionBuf = arg_actor.transform.position;
+			m_frame = arg_frame;
+			m_currentFrame = arg_currentFrame;
 		}
 
 		/// <summary>
@@ -32,8 +40,8 @@ namespace Z10 {
 		/// <param name="arg_actor"></param>
 		public void Execute(LadderUser arg_actor) {
 
-			Vector2 increase = (m_destination - m_startPosition) / 50;
-			arg_actor.transform.position += (Vector3)increase;
+			float vertical = (m_destination.y - m_startPosition.y) / m_frame;
+			arg_actor.transform.position = m_startPosition + Vector2.up * vertical * m_currentFrame;
 			
 		}
 

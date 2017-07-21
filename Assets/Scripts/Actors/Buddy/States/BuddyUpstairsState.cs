@@ -35,7 +35,7 @@ namespace Z10 {
 			//上キーで昇る
 			if (Input.GetKey(arg_actor.m_upKey)) {
 				m_currentFrame += 1;
-				m_task.Push(new UpstairsCommand(arg_actor));
+				m_task.Push(new UpstairsCommand(arg_actor,FRAME,m_currentFrame));
 				m_task.Peek().Execute(arg_actor);
 				if(m_currentFrame >= FRAME) {
 					arg_actor.m_currentFloor += 1;
