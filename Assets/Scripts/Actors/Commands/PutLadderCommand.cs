@@ -12,6 +12,9 @@ namespace Z10 {
 		}
 
 		public void Execute(LadderUser arg_actor) {
+
+			if (arg_actor.m_currentFloor >= 3) return;
+
 			if (arg_actor.FindLadderFromUp()) { }
 			else {
 				m_ladderHolder.PutLadder(arg_actor.m_currentFloor , arg_actor.transform.position.x);
