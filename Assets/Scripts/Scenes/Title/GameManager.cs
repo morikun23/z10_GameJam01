@@ -6,6 +6,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 namespace Z10.Title {
 	public class GameManager : MonoBehaviour {
@@ -151,8 +152,8 @@ namespace Z10.Title {
                     //スペースキー押したらシーン遷移
                     if (Input.GetKeyDown(KeyCode.Space))
                     {
-                        //遷移したい
-
+					//遷移したい
+					SceneManager.LoadScene("Main");
                     }
 
                     break;

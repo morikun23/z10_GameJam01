@@ -5,6 +5,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Z10.Introduction{
 	public class GameManager : MonoBehaviour {
@@ -55,8 +56,8 @@ namespace Z10.Introduction{
                 filter.color += new Color(0,0,0, addAlpha);
                 if(filter.color.a >= 1)
                 {
-                    //シーン遷移
-                    Application.LoadLevel(1);
+					//シーン遷移
+					SceneManager.LoadScene("Title");
                 }
             }
 

@@ -5,6 +5,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Z10.GameOver {
 	public class GameManager : MonoBehaviour {
@@ -50,7 +51,7 @@ namespace Z10.GameOver {
 
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
-                    Application.LoadLevel(1);
+					SceneManager.LoadScene("Title");
                 }
 
             }
