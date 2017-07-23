@@ -6,7 +6,7 @@ namespace Z10 {
 	public class BuddyUpstairsState : IBuddyState {
 
 		//梯子を上る際のキーフレーム数
-		private const int FRAME = 50;
+		private const int FRAME = 100;
 
 		//現在のフレーム数
 		private int m_currentFrame;

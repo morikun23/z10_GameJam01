@@ -21,7 +21,7 @@ namespace Z10 {
 
 			arg_actor.transform.position =
 				new Vector3(arg_actor.transform.position.x ,
-				-3.75f + (arg_actor.m_currentFloor - 1) * 2.95f , 0);
+				Stage.LOWEST_FLOOR_Y + (arg_actor.m_currentFloor - 1) * Stage.FLOOR_HEIGHT , 0);
 
 			if (Input.GetKey(arg_actor.m_leftKey)) {
 				arg_actor.m_currentTask.Enqueue(new RunLeftCommand());

@@ -29,6 +29,18 @@ namespace Z10 {
 		}
 
 		/// <summary>
+		/// 梯子が置けるかを確認する
+		/// </summary>
+		/// <param name="arg_origin"></param>
+		/// <returns></returns>
+		private bool IsLadderExit(float arg_horizontal , float arg_vertical) {
+			RaycastHit2D hitInfo = Physics2D.BoxCast(new Vector2(arg_horizontal ,arg_vertical)
+				 , Vector2.one * 2.25f , 0 ,
+				Vector2.zero , 0 , 1 << LayerMask.NameToLayer("Ladder"));
+			return hitInfo;
+		}
+
+		/// <summary>
 		/// 空き梯子を探します
 		/// </summary>
 		/// <returns>空き梯子がない場合はNULLを返す</returns>
@@ -45,7 +57,10 @@ namespace Z10 {
 		public Ladder PutLadder(int arg_floor , float arg_horizontal) {
 			Ladder ladder = FindFreeLadder();
 			if (ladder) {
-				float vertical = -3f + (arg_floor - 1) * 3;
+				float vertical = -5.5f + (arg_floor - 1) * Stage.FLOOR_HEIGHT;
+
+				if (IsLadderExit(arg_horizontal,vertical)) return null;
+
 				ladder.transform.position = new Vector3(arg_horizontal , vertical);
 				ladder.m_currentFloor = arg_floor;
 				ladder.SetActive(true);

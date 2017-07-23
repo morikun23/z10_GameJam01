@@ -27,8 +27,8 @@ namespace Z10 {
 		/// <param name="arg_actor"></param>
 		public UpstairsCommand(LadderUser arg_actor , int arg_frame , int arg_currentFrame) {
 			int m_currentFloor = arg_actor.m_currentFloor;
-			m_startPosition = new Vector2(arg_actor.transform.position.x , (-3.75f + (m_currentFloor - 1) * 2.95f));
-			m_destination = new Vector2(arg_actor.transform.position.x,(-3.75f + (m_currentFloor + 1 - 1) * 2.95f));
+			m_startPosition = new Vector2(arg_actor.transform.position.x , (Stage.LOWEST_FLOOR_Y + (m_currentFloor - 1) * Stage.FLOOR_HEIGHT));
+			m_destination = new Vector2(arg_actor.transform.position.x,(Stage.LOWEST_FLOOR_Y + (m_currentFloor + 1 - 1) * Stage.FLOOR_HEIGHT));
 			m_positionBuf = arg_actor.transform.position;
 			m_frame = arg_frame;
 			m_currentFrame = arg_currentFrame;
