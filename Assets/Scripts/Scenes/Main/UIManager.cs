@@ -14,7 +14,20 @@ namespace Z10
 
         //スコア表示用スプライト、パス
         Sprite[] score_sprites;
-        string file_name = "Sprites/UI/ScoreNumber_sprite";
+        string file_name_score = "Sprites/UI/ScoreNumber_sprite";
+
+        //はしご使用状況を表示しているオブジェクト
+        GameObject hashigo_count_obj;
+
+        //はしごの使用状況用スプライト、パス
+        Sprite[] hashigo_count_sprites;
+        string file_name_hashigo = "Sprites/UI/hashigo_count_number";
+
+        //体力バーを格納しているオブジェ
+        GameObject life_obj;
+
+        //体力バー達
+        List<Image> life_bars = new List<Image>();
 
         // Use this for initialization
         void Start()
@@ -23,7 +36,21 @@ namespace Z10
             score_obj = GameObject.Find("Score");
             score_first = GameObject.Find("score_number");
 
-            score_sprites = Resources.LoadAll<Sprite>(file_name);
+            score_sprites = Resources.LoadAll<Sprite>(file_name_score);
+
+            hashigo_count_obj = GameObject.Find("hashigo_count");
+
+            hashigo_count_sprites = Resources.LoadAll<Sprite>(file_name_hashigo);
+
+            life_obj = GameObject.Find("Life");
+            foreach (Transform obj in life_obj.transform)
+            {
+                if (0 <= obj.name.LastIndexOf("Life_bar"))
+                {
+                    life_bars.Add(obj.GetComponent<Image>());
+                }
+            }
+            
         }
 
         // Update is called once per frame
@@ -32,20 +59,40 @@ namespace Z10
 
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                RandomScore();
+                var random = Random.Range(1, 9000000);
+                scoreView(random);
+
+                var randomrondamo = Random.Range(0, 4);
+                hashigoView(randomrondamo);
+
+                var randomr = Random.Range(0, 4);
+                Debug.Log("Life = " + randomr);
+                lifeView(randomr);
             }
 
         }
 
-        public void RandomScore()
+        //はしご使用状況更新
+        void hashigoView(int count)
         {
-            //クリックされるたびにrandomでスコアを変動
-            var random = Random.Range(1, 9000000);
-
-            
-            scoreView(random);
+            hashigo_count_obj.GetComponent<Image>().sprite = hashigo_count_sprites[count];
         }
 
+        //体力更新
+        void lifeView(int lifecount)
+        {
+            for (int i = 0; i < lifecount; i++)
+            {
+                life_bars[i].color = new Color(1, 1, 1, 1);
+            }
+
+            for (int i = life_bars.Count; i > lifecount; i--)
+            {
+                life_bars[i - 1].color = new Color(0, 0, 0, 1);
+            }
+        }
+
+        //スコア更新
         void scoreView(int score)
         {
             //前回までのスコアを消す
