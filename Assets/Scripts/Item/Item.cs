@@ -1,13 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Z10 {
 	public class Item : MonoBehaviour {
 
-
-        public virtual void Update() {
+		public virtual void Update() {
 
 		}
 
@@ -18,6 +16,7 @@ namespace Z10 {
 
 		protected virtual void OnGotten() {
 			GameObject emergedEffect = Instantiate(effect , transform.position , Quaternion.identity);
+			Destroy(this.gameObject);
 			Destroy(emergedEffect , 1.5f);
 		}
 
