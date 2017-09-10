@@ -43,14 +43,19 @@ namespace Z10
             hashigo_count_sprites = Resources.LoadAll<Sprite>(file_name_hashigo);
 
             life_obj = GameObject.Find("Life");
-            foreach (Transform obj in life_obj.transform)
+
+            if (life_obj)
             {
-                if (0 <= obj.name.LastIndexOf("Life_bar"))
+
+                foreach (Transform obj in life_obj.transform)
                 {
-                    life_bars.Add(obj.GetComponent<Image>());
+                    if (0 <= obj.name.LastIndexOf("Life_bar"))
+                    {
+                        life_bars.Add(obj.GetComponent<Image>());
+                    }
                 }
+
             }
-            
         }
 
         // Update is called once per frame
@@ -59,15 +64,25 @@ namespace Z10
 
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                var random = Random.Range(1, 9000000);
-                scoreView(random);
+                if (score_obj)
+                {
+                    var random = Random.Range(1, 9000000);
+                    scoreView(random);
+                }
 
-                var randomrondamo = Random.Range(0, 4);
-                hashigoView(randomrondamo);
+                if (hashigo_count_obj)
+                {
+                    var randomrondamo = Random.Range(0, 4);
+                    hashigoView(randomrondamo);
+                }
 
-                var randomr = Random.Range(0, 4);
-                Debug.Log("Life = " + randomr);
-                lifeView(randomr);
+                if (life_obj)
+                {
+                    var randomr = Random.Range(0, 4);
+                    Debug.Log("Life = " + randomr);
+                    lifeView(randomr);
+                }
+
             }
 
         }
