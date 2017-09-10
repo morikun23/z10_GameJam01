@@ -16,8 +16,11 @@ namespace Z10 {
 
 		public void UpdateByFrame(Player arg_player) {
 			ViewDirection(arg_player.m_direction);
+            ViewStateAnimation(arg_player.m_currentState);
+            
 
-		}
+
+        }
 
 		private void ViewDirection(ActorBase.Direction arg_direction) {
 			switch (arg_direction) {
@@ -30,13 +33,14 @@ namespace Z10 {
 			}
 		}
 
-		private void ViewStateAnimation(IActorCommand arg_currentCommand) {
+		private void ViewStateAnimation(IBuddyState arg_currentCommand) {
 			if(arg_currentCommand == null) { m_animator.Play("Idle"); }
-			else if (arg_currentCommand.GetType() == typeof(RunRightCommand)) {
+			else if (arg_currentCommand.GetType() == typeof(BuddyRunState)) {
 				m_animator.Play("Run");
 			}
-			else if(arg_currentCommand.GetType() == typeof(RunLeftCommand)) {
-				m_animator.Play("Run");
+			else if(arg_currentCommand.GetType() == typeof(BuddyUpstairsState) ||
+                    arg_currentCommand.GetType() == typeof(BuddyDownstairsState)) {
+				m_animator.Play("Stairs");
 			}
 			else {
 				m_animator.Play("Idle");
