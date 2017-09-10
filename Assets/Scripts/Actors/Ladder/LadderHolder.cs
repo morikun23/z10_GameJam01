@@ -33,7 +33,7 @@ namespace Z10 {
 		/// </summary>
 		/// <param name="arg_origin"></param>
 		/// <returns></returns>
-		private bool IsLadderExit(float arg_horizontal , float arg_vertical) {
+		public bool IsLadderExist(float arg_horizontal , float arg_vertical) {
 			RaycastHit2D hitInfo = Physics2D.BoxCast(new Vector2(arg_horizontal ,arg_vertical)
 				 , Vector2.one * 2.25f , 0 ,
 				Vector2.zero , 0 , 1 << LayerMask.NameToLayer("Ladder"));
@@ -59,7 +59,7 @@ namespace Z10 {
 			if (ladder) {
 				float vertical = -5.5f + (arg_floor - 1) * Stage.FLOOR_HEIGHT;
 
-				if (IsLadderExit(arg_horizontal,vertical)) return null;
+				if (IsLadderExist(arg_horizontal,vertical)) return null;
 
 				ladder.transform.position = new Vector3(arg_horizontal , vertical);
 				ladder.m_currentFloor = arg_floor;
