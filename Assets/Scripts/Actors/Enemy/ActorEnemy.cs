@@ -3,13 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace Z10 {
-	public abstract class ActorEnemy : LadderUser {
+	public class ActorEnemy : LadderUser {
 
 		[SerializeField]
 		protected int m_score;
-		
-		public override void Initialize() {
 
+		public IEnemyState m_currentState { get; private set; }
+
+		public override void Initialize() {
+			m_currentState = new EnemyRunState();
+			m_currentState.OnEnter(this);
 		}
 
 		public override void UpdateByFrame() {
@@ -17,20 +20,8 @@ namespace Z10 {
 			//向きを更新
 			UpdateDirection();
 
-			//TODO:目の前にプレイヤーがいるか
-			Player target = FindPlayer(new Vector2((int)m_direction , 0) * 3);
-			if (target) {
-				return;
-			}
+			m_currentState.OnUpdate(this);
 
-			//TODO:梯子チェック
-			Ladder ladder = FindLadderFromUp();
-			if (ladder) {
-				return;
-			}
-
-			//TODO:歩く
-			
 		}
 
 		public Player FindPlayer(Vector2 arg_length) {
@@ -39,6 +30,7 @@ namespace Z10 {
 				arg_length.magnitude , 1 << LayerMask.NameToLayer("Player"));
 
 			if (hitInfo) {
+				Debug.Log("HIT");
 				return hitInfo.collider.gameObject.GetComponent<Player>();
 			}
 			return null;
@@ -47,14 +39,22 @@ namespace Z10 {
 		public void UpdateDirection() {
 			if (Physics2D.BoxCast(this.transform.position ,
 				new Vector2(this.m_width , this.m_height) ,
-				0 , Vector2.left , this.m_speed , 1 << LayerMask.NameToLayer("Wall"))) {
+				0 , Vector2.right * (int)m_direction , this.m_speed , 1 << LayerMask.NameToLayer("Wall"))) {
 				//逆方向へ向かせる
 				m_direction = (Direction)System.Enum.ToObject(typeof(Direction) , -(int)m_direction);
 			}
 		}
 
 		public void ExecuteTask(IActorCommand arg_command) {
+			Debug.Log(arg_command);
 			arg_command.Execute(this);
 		}
+
+		public void StateTransition(IEnemyState arg_state) {
+			m_currentState.OnExit(this);
+			m_currentState = arg_state;
+			m_currentState.OnEnter(this);
+		}
+
 	}
 }

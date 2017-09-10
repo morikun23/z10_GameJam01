@@ -2,15 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Generator : MonoBehaviour {
+namespace Z10 {
+	public class Generator : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
+		public void Initialize() {
+
+		}
 		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
+		public void Generate(ActorEnemy arg_enemy) {
+			arg_enemy.transform.position = this.transform.position;
+			arg_enemy.gameObject.SetActive(true);
+			arg_enemy.Initialize();
+		}
 	}
 }
