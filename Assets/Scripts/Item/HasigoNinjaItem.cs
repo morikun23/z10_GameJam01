@@ -23,7 +23,7 @@ namespace Z10{
 
         float xspeed = 0.05f;
 
-        public AudioClip openSE;
+        public AudioClip openSE,effectSE;
 
         // Use this for initialization
         void Start()
@@ -131,6 +131,7 @@ namespace Z10{
 
             }
 
+            AudioSource.PlayClipAtPoint(effectSE, Camera.main.transform.position);
             Destroy(emergedEffect, 1.5f);
             Destroy(this.gameObject);
 
