@@ -63,7 +63,7 @@ namespace Z10.Title {
 
             //ロゴをでっかくして消します
             m_startLogoSize = m_logo.transform.localScale;
-            m_logo.transform.localScale = new Vector3(3,3,0);
+            m_logo.transform.localScale = new Vector3(10,10,0);
             m_logo.SetActive(false);
 
             //忍者の演出から
@@ -127,7 +127,7 @@ namespace Z10.Title {
                         AudioSource.PlayClipAtPoint(logorota, Camera.main.transform.position);
                     }
 
-                    if (Vector3.Distance(m_logo.transform.localScale, m_startLogoSize) < 0.1f)
+                    if (Vector3.Distance(m_logo.transform.localScale, m_startLogoSize) < 0.2f)
                     {
                         Flash();
 
