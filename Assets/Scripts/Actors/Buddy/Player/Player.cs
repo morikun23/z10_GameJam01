@@ -15,6 +15,14 @@ namespace Z10 {
 		
 		private PlayerViewer m_viewer { get; set; }
 
+		void Start() {
+			this.Initialize();
+		}
+
+		void Update() {
+			this.UpdateByFrame();
+		}
+
 		/// <summary>
 		/// 初期化
 		/// </summary>
