@@ -49,10 +49,13 @@ namespace Z10 {
 			}
 
 			if (Input.GetKeyDown(arg_actor.m_actionKey1)) {
-				arg_actor.m_currentTask.Enqueue(new PutLadderCommand(arg_actor.m_ladderHolder));
-			}
-			else if (Input.GetKeyDown(arg_actor.m_actionKey2)) {
-				arg_actor.m_currentTask.Enqueue(new RemoveLadderCommand(arg_actor.m_ladderHolder));
+				float vertical = -5.5f + (arg_actor.m_currentFloor - 1) * Stage.FLOOR_HEIGHT;
+				if (arg_actor.m_ladderHolder.IsLadderExist(arg_actor.transform.position.x , vertical)) {
+					arg_actor.m_currentTask.Enqueue(new RemoveLadderCommand(arg_actor.m_ladderHolder));
+				}
+				else {
+					arg_actor.m_currentTask.Enqueue(new PutLadderCommand(arg_actor.m_ladderHolder));
+				}
 			}
 
 			if (arg_actor.m_currentTask.Count > 0) {
