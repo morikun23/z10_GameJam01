@@ -19,9 +19,7 @@ namespace Z10.Main {
 		/// 初期化
 		/// </summary>
 		public void Initialize() {
-			m_player = Instantiate(
-				Resources.Load<GameObject>(Player.PREFAB_PASS) ,
-				this.transform).GetComponent<Player>();
+			m_player = FindObjectOfType<Player>();
 			m_player.Initialize();
 		}
 
