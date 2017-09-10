@@ -57,7 +57,7 @@ namespace Z10 {
 		public Ladder PutLadder(int arg_floor , float arg_horizontal) {
 			Ladder ladder = FindFreeLadder();
 			if (ladder) {
-				float vertical = -5.5f + (arg_floor - 1) * Stage.FLOOR_HEIGHT;
+				float vertical = -6.1f + (arg_floor - 1) * Stage.FLOOR_HEIGHT;
 
 				if (IsLadderExist(arg_horizontal,vertical)) return null;
 

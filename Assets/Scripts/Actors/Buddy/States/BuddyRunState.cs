@@ -26,10 +26,11 @@ namespace Z10 {
 			if (Input.GetKey(arg_actor.m_leftKey)) {
 				arg_actor.m_currentTask.Enqueue(new RunLeftCommand());
 			}
-			else if (Input.GetKey(arg_actor.m_rightKey)) {
+			if (Input.GetKey(arg_actor.m_rightKey)) {
 				arg_actor.m_currentTask.Enqueue(new RunRightCommand());
 			}
-			else {
+
+			if (!Input.GetKey(arg_actor.m_leftKey) && !Input.GetKey(arg_actor.m_rightKey)) {
 				arg_actor.StateTransition(new BuddyIdleState());
 			}
 
@@ -58,9 +59,10 @@ namespace Z10 {
 				}
 			}
 
-			if (arg_actor.m_currentTask.Count > 0) {
+			while (arg_actor.m_currentTask.Count > 0) {
 				arg_actor.m_currentTask.Dequeue().Execute(arg_actor);
 			}
+			
 		}
 
 		/// <summary>

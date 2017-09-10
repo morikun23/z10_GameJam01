@@ -8,7 +8,7 @@ namespace Z10 {
 		//階層の数
 		public const int FLOOR_COUNT = 3;
 		//１フロアの高さ
-		public const float FLOOR_HEIGHT = 6;
+		public const float FLOOR_HEIGHT = 4.8f;
 
 		//最低フロアの座標
 		public const float LOWEST_FLOOR_Y = -8.0f;

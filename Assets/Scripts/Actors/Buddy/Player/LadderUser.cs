@@ -18,7 +18,7 @@ namespace Z10 {
 
 		public Ladder FindLadderFromDown() {
 			if (m_currentFloor <= 1) return null;
-			return FindLadder(new Vector2(transform.position.x , -3 + (m_currentFloor - 2) * Stage.FLOOR_HEIGHT));
+			return FindLadder(new Vector2(transform.position.x , -6.1f + (m_currentFloor - 2) * Stage.FLOOR_HEIGHT));
 		}
 
 		private Ladder FindLadder(Vector2 arg_origin) {
