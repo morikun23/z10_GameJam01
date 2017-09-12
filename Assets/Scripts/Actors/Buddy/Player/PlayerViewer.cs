@@ -51,7 +51,7 @@ namespace Z10 {
                 m_animator.Play("DownAttack");
             }
             else {
-				m_animator.Play("Run");
+				m_animator.Play("Idle");
 			}
 		}
 	}
