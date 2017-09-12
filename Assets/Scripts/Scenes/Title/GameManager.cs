@@ -153,7 +153,8 @@ namespace Z10.Title {
                     if (Input.GetKeyDown(KeyCode.Space))
                     {
 					//遷移したい
-					SceneManager.LoadScene("Main");
+					StartCoroutine(SceneTransition());
+					
                     }
 
                     break;
@@ -190,6 +191,12 @@ namespace Z10.Title {
             Flash();
             state = TitleState.toInput;
         }
+
+		private IEnumerator SceneTransition() {
+			ToyBox.AppManager.Instance.m_fade.StartFade(new ToyBox.FadeOut() , Color.black , 0.5f);
+			yield return new WaitWhile(ToyBox.AppManager.Instance.m_fade.IsFading);
+			SceneManager.LoadScene("Main");
+		}
 
 	}
 }

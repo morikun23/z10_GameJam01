@@ -61,6 +61,7 @@ namespace Z10{
         // Update is called once per frame
         void Update()
         {
+			if(transform.position.x > 18) { Destroy(this.gameObject);}
             transform.position += new Vector3(xspeed,0,0);
         }
 
@@ -105,6 +106,7 @@ namespace Z10{
                     //敵を殲滅するスクリプト
 
                     emergedEffect.transform.FindChild("Text PS").GetComponent<Renderer>().material.mainTexture = Resources.Load<Texture>(bombTextpass);
+
                     break;
                 //体力
                 case 1:
@@ -112,20 +114,19 @@ namespace Z10{
                     //体力を１回復
 
                     emergedEffect.transform.FindChild("Text PS").GetComponent<Renderer>().material.mainTexture = Resources.Load<Texture>(lifeTextpass);
-                    break;
+					
+					break;
                 //はずれ
                 case 2:
 
-                    //１スコア増やす
-
+					//１スコア増やす
                     emergedEffect.transform.FindChild("Text PS").GetComponent<Renderer>().material.mainTexture = Resources.Load<Texture>(hazureTextpass);
                     break;
                 //千ポイント
                 case 3:
 
-                    //1000スコア増やす
-
-                    emergedEffect.transform.FindChild("Text PS").GetComponent<Renderer>().material.mainTexture = Resources.Load<Texture>(goldTextpass);
+					//1000スコア増やす
+					emergedEffect.transform.FindChild("Text PS").GetComponent<Renderer>().material.mainTexture = Resources.Load<Texture>(goldTextpass);
                     break;
 
 
@@ -133,7 +134,27 @@ namespace Z10{
 
             AudioSource.PlayClipAtPoint(effectSE, Camera.main.transform.position);
             Destroy(emergedEffect, 1.5f);
-            Destroy(this.gameObject);
+
+			//オブジェクトが消えるまで待機
+			System.Func<GameObject , bool> IsAlive = _ => _;
+			yield return IsAlive(emergedEffect);
+
+			//時間補正
+			yield return new WaitForSeconds(0.5f);
+
+			//効果発動
+			switch (Item_num) {
+				case 0: FindObjectOfType<EnemyManager>().AllEnemyDestroy(); break;
+				case 1:
+				Player player = FindObjectOfType<Player>();
+				if (player.m_hp < player.m_maxHp) { player.m_hp += 1; }
+				break;
+				case 2: MainScene.m_gameScore.totalScore += 1; break;
+				case 3: MainScene.m_gameScore.totalScore += 1000; break;
+			}
+
+
+			Destroy(this.gameObject);
 
         }
     }

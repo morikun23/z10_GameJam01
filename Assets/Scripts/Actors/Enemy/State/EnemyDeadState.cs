@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace Z10 {
-    public class EnemyDeadState : IEnemyState
+    public class EnemyDeadState : MonoBehaviour , IEnemyState
     {
 
         float m_xspeed = 0.1f;
@@ -18,6 +18,10 @@ namespace Z10 {
 
         public void OnEnter(ActorEnemy arg_enemy)
         {
+			if (arg_enemy.m_usingLadder) {
+				arg_enemy.m_usingLadder.UnUse();
+				arg_enemy.m_usingLadder = null;
+			}
             m_visible = arg_enemy.GetComponent<SpriteRenderer>();
             //当たり判定を消す
             arg_enemy.GetComponent<BoxCollider2D>().enabled = false;
@@ -47,9 +51,8 @@ namespace Z10 {
             m_elapsedTime += Time.deltaTime;
 
             if (m_elapsedTime > m_endTime) {
-                //ステート遷移？？
-                //消滅？？
-                //リストから消す？？
+				//Resources.Load<>
+				Destroy(arg_enemy.gameObject);
             }
         }
 

@@ -23,44 +23,36 @@ public class StartTest : MonoBehaviour {
         GameObject startObj = Instantiate(m_startMessageOrigin, new Vector3(0 + Random.Range(-0.5f, 0.5f), 0 + Random.Range(-0.5f, 0.5f), 0), Quaternion.identity);
         startObj.SetActive(false);
 
-        while (true)
-        {
-            
+        yield return new WaitForSeconds(1f);
 
-            yield return new WaitForSeconds(1f);
+        startObj.SetActive(true);
+        startObj.transform.position = new Vector3(0 + Random.Range(-0.5f, 0.5f), 0 + Random.Range(-0.5f, 0.5f), 0);
 
-            startObj.SetActive(true);
-            startObj.transform.position = new Vector3(0 + Random.Range(-0.5f, 0.5f), 0 + Random.Range(-0.5f, 0.5f), 0);
+        yield return new WaitForSeconds(0.01f);
 
-            yield return new WaitForSeconds(0.01f);
+        startObj.transform.position = new Vector3(0 + Random.Range(-0.5f, 0.5f), 0 + Random.Range(-0.5f, 0.5f), 0);
 
-            startObj.transform.position = new Vector3(0 + Random.Range(-0.5f, 0.5f), 0 + Random.Range(-0.5f, 0.5f), 0);
+        yield return new WaitForSeconds(0.01f);
 
-            yield return new WaitForSeconds(0.01f);
+        startObj.transform.position = new Vector3(0 + Random.Range(-0.5f, 0.5f), 0 + Random.Range(-0.5f, 0.5f), 0);
 
-            startObj.transform.position = new Vector3(0 + Random.Range(-0.5f, 0.5f), 0 + Random.Range(-0.5f, 0.5f), 0);
+        yield return new WaitForSeconds(0.01f);
 
-            yield return new WaitForSeconds(0.01f);
+        startObj.transform.position = new Vector3(0 + Random.Range(-0.5f, 0.5f), 0 + Random.Range(-0.5f, 0.5f), 0);
 
-            startObj.transform.position = new Vector3(0 + Random.Range(-0.5f, 0.5f), 0 + Random.Range(-0.5f, 0.5f), 0);
+        yield return new WaitForSeconds(0.01f);
 
-            yield return new WaitForSeconds(0.01f);
+        startObj.transform.position = new Vector3(0 + Random.Range(-0.5f, 0.5f), 0 + Random.Range(-0.5f, 0.5f), 0);
 
-            startObj.transform.position = new Vector3(0 + Random.Range(-0.5f, 0.5f), 0 + Random.Range(-0.5f, 0.5f), 0);
+        yield return new WaitForSeconds(0.01f);
 
-            yield return new WaitForSeconds(0.01f);
+        startObj.transform.position = new Vector3(0 + Random.Range(-0.5f, 0.5f), 0 + Random.Range(-0.5f, 0.5f), 0);
 
-            startObj.transform.position = new Vector3(0 + Random.Range(-0.5f, 0.5f), 0 + Random.Range(-0.5f, 0.5f), 0);
+        yield return new WaitForSeconds(0.01f);
 
-            yield return new WaitForSeconds(0.01f);
+        startObj.transform.position = Vector3.zero;
 
-            startObj.transform.position = Vector3.zero;
-
-            yield return new WaitForSeconds(1.5f);
-
-            break;
-
-        }
+        yield return new WaitForSeconds(1.5f);
 
 
         float moveSpeed = 0.3f;

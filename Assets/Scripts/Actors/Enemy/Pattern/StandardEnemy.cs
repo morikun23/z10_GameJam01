@@ -5,12 +5,12 @@ using UnityEngine;
 namespace Z10 {
 	public class StandardEnemy : ActorEnemy {
 
-		void Start() {
-			Initialize();
+		public override void Initialize() {
+			base.Initialize();
 		}
 
-		void Update() {
-			UpdateByFrame();
+		public override void UpdateByFrame() {
+			base.UpdateByFrame();
 		}
 	}
 }

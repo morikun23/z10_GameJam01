@@ -15,6 +15,11 @@ namespace Z10 {
 		
 		private PlayerViewer m_viewer { get; set; }
 
+		public bool m_isStrongMode { get; private set; }
+
+		[SerializeField]
+		private AudioClip m_damagedSE;
+
 		/// <summary>
 		/// 初期化
 		/// </summary>
@@ -29,6 +34,7 @@ namespace Z10 {
 
 			m_currentTask = new Queue<IActorCommand>();
 			this.StateTransition(new BuddyIdleState());
+			m_isStrongMode = false;
 		}
 
 		/// <summary>
@@ -47,6 +53,25 @@ namespace Z10 {
 		/// </summary>
 		private void View() {
 			m_viewer.UpdateByFrame(this);
+		}
+
+		public override void OnDamaged() {
+			if (m_isStrongMode) return;
+			m_hp -= 1;
+			AudioSource se = ToyBox.AppManager.Instance.m_audioManager.CreateSe(m_damagedSE);
+			se.Play();
+			if (m_hp <= 0) {
+				this.StateTransition(new BuddyDeadState());
+			}
+			else {
+				m_isStrongMode = true;
+				StartCoroutine(EndStrongMode(3.0f));
+			}
+		}
+
+		private IEnumerator EndStrongMode(float arg_interval) {
+			yield return new WaitForSeconds(arg_interval);
+			m_isStrongMode = false;
 		}
 	}
 }

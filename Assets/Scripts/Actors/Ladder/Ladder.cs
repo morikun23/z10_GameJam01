@@ -11,6 +11,8 @@ namespace Z10 {
 
 		public bool m_isActive { get; private set; }
 
+		private int m_userCount;
+
 		/// <summary>
 		/// 初期化
 		/// </summary>
@@ -28,5 +30,16 @@ namespace Z10 {
 			gameObject.SetActive(m_isActive);
 		}
 
+		public void Use() {
+			m_userCount += 1;
+		}
+
+		public void UnUse() {
+			m_userCount -= 1;
+		}
+
+		public bool IsFree() {
+			return m_userCount <= 0;
+		}
 	}
 }

@@ -7,7 +7,7 @@ namespace Z10 {
 	public class StartUpScene : ToyBox.Scene {
 
 		public override IEnumerator OnEnter() {
-			AppManager.Instance.m_fade.Fill(Color.black);
+			//AppManager.Instance.m_fade.Fill(Color.black);
 			yield break;
 		}
 
@@ -16,7 +16,7 @@ namespace Z10 {
 		}
 
 		public override IEnumerator OnExit() {
-			UnityEngine.SceneManagement.SceneManager.LoadScene("Main");
+			UnityEngine.SceneManagement.SceneManager.LoadScene("Introduction");
 			yield return null;
 
 		}

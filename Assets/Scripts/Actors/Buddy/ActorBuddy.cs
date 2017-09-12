@@ -40,7 +40,7 @@ namespace Z10 {
 		//タスク
 		public Queue<IActorCommand> m_currentTask { get; protected set; }
 		//ステート
-		public IBuddyState m_currentState { get; private set; }
+		public IBuddyState m_currentState;
 
 		//梯子を所持するためのコンポーネント
 		public LadderHolder m_ladderHolder { get; protected set; }
@@ -54,5 +54,7 @@ namespace Z10 {
 			m_currentState = arg_nextState;
 			m_currentState.OnEnter(this);
 		}
+
+		public virtual void OnDamaged() { }
 	}
 }

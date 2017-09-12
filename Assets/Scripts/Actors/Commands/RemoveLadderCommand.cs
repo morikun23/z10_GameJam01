@@ -16,6 +16,7 @@ namespace Z10 {
 			Ladder ladder = arg_actor.FindLadderFromUp();
 
 			if (ladder) {
+				if (ladder.IsFree())
 				m_ladderHolder.RemoveLadder(ladder);
 			}
 		}

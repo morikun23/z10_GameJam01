@@ -6,42 +6,43 @@ namespace Z10 {
 	public class EnemyRunState : IEnemyState {
 
 		public void OnEnter(ActorEnemy arg_enemy) {
-
+			
 		}
 
 		public void OnUpdate(ActorEnemy arg_enemy) {
+
+			//向きを更新
+			arg_enemy.UpdateDirection();
 
 			arg_enemy.transform.position =
 				new Vector3(arg_enemy.transform.position.x ,
 				Stage.LOWEST_FLOOR_Y + (arg_enemy.m_currentFloor - 1) * Stage.FLOOR_HEIGHT , 0);
 
 			//TODO:目の前にプレイヤーがいるか
-			Player target = arg_enemy.FindPlayer(new Vector2((int)arg_enemy.m_direction , 0) * 3);
+			Player target = arg_enemy.FindPlayer(new Vector2((int)arg_enemy.m_direction , 0) * 0.5f);
 			if (target) {
-				target.m_hp -= 1;
+				target.OnDamaged();
 				return;
 			}
 
 			//TODO:梯子チェック
 			Ladder ladder = arg_enemy.FindLadderFromUp();
-			if (ladder) {
-				arg_enemy.StateTransition(new EnemyUpstairsState());
+			if (ladder == arg_enemy.ladderBuf) { }
+			else if (ladder) {
+				arg_enemy.StateTransition(new EnemyUpstairsState(ladder));
 				return;
 			}
 
 			ladder = arg_enemy.FindLadderFromDown();
-			if (ladder) {
-				arg_enemy.StateTransition(new EnemyDownstairsState());
+			if (ladder == arg_enemy.ladderBuf) { }
+			else if (ladder) {
+				arg_enemy.StateTransition(new EnemyDownstairsState(ladder));
 				return;
 			}
 
-			//TODO:歩く
-			if (arg_enemy.m_direction == ActorBase.Direction.LEFT) {
-				arg_enemy.ExecuteTask(new RunLeftCommand());
-			}
-			else {
-				arg_enemy.ExecuteTask(new RunRightCommand());
-			}
+			//移動（コマンド使うと重かった）
+			arg_enemy.transform.position += Vector3.right * (int)arg_enemy.m_direction * arg_enemy.m_speed;
+			
 		}
 
 		public void OnExit(ActorEnemy arg_enemy) {

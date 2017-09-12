@@ -33,7 +33,7 @@ namespace Z10
         List<Image> life_bars = new List<Image>();
 
         // Use this for initialization
-        void Start()
+        public void Initialize()
         {
 
             player_Script = GameObject.FindObjectOfType<Player>();
@@ -64,17 +64,18 @@ namespace Z10
         }
 
         // Update is called once per frame
-        void Update()
+        public void UpdateByFrame()
         {
 
             if (score_obj)
             {
                 //scoreView(MainScene.m_gameScore.totalScore);
-                scoreView(0);
+                scoreView(MainScene.m_gameScore.totalScore);
             }
 
             if (hashigo_count_obj)
             {
+				
                 hashigoView(player_Script.m_ladderHolder.GetLaddersActive().Where(_ => !_.gameObject.activeInHierarchy).ToList().Count);
             }
 
@@ -88,13 +89,16 @@ namespace Z10
         //はしご使用状況更新
         void hashigoView(int count)
         {
+			
+			hashigo_count_obj.GetComponent<Image>().sprite = hashigo_count_sprites[count];
 
-            hashigo_count_obj.GetComponent<Image>().sprite = hashigo_count_sprites[count];
-        }
+		}
 
-        //体力更新
-        void lifeView(int lifecount)
+		//体力更新
+		void lifeView(int lifecount)
         {
+			if(lifecount < 0) { lifecount = 0; }
+
             for (int i = 0; i < lifecount; i++)
             {
                 life_bars[i].color = new Color(1, 1, 1, 1);

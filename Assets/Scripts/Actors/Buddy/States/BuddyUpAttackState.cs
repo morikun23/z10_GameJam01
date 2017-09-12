@@ -4,50 +4,62 @@ using UnityEngine;
 
 namespace Z10 {
 
-    public class BuddyUpAttackState : IBuddyState
-    {
+	public class BuddyUpAttackState : IBuddyState {
 
-        //攻撃の時間
-        float m_attackTime = 0.5f;
+		//攻撃の時間
+		const float m_attackTime = 0.5f;
 
-        //経過時間
-        float m_durationtime = 0;
+		//経過時間
+		float m_elapsedTime;
 
-        private Ladder m_ladder;
+		IBuddyState m_stateBuffer;
 
-        /// <summary>
-        /// ステート開始時に一度だけ呼ばれる
-        /// </summary>
-        /// <param name="arg_actor"></param>
-        public void OnEnter(ActorBuddy arg_actor)
-        {
+		public BuddyUpAttackState(IBuddyState arg_stateBuffer) {
+			m_stateBuffer = arg_stateBuffer;
+		}
 
-        }
+		/// <summary>
+		/// ステート開始時に一度だけ呼ばれる
+		/// </summary>
+		/// <param name="arg_actor"></param>
+		public void OnEnter(ActorBuddy arg_actor) {
+			m_elapsedTime = 0;
+		}
 
-        /// <summary>
-        /// ステート中毎フレーム更新される
-        /// </summary>
-        /// <param name="arg_actor"></param>
-        public void OnUpdate(ActorBuddy arg_actor)
-        {
+		/// <summary>
+		/// ステート中毎フレーム更新される
+		/// </summary>
+		/// <param name="arg_actor"></param>
+		public void OnUpdate(ActorBuddy arg_actor) {
 
-            m_durationtime += Time.deltaTime;
+			//上に敵がいたら攻撃する
+			RaycastHit2D hitInfo = Physics2D.BoxCast(arg_actor.transform.position,
+				new Vector2(0.8f , 0.1f) ,
+				0 , Vector2.up , 1 , 1 << LayerMask.NameToLayer("Enemy"));
 
-            if(m_durationtime > m_attackTime)
-            {
-                Ladder ladder = arg_actor.FindLadderFromUp();
-                arg_actor.StateTransition(new BuddyUpstairsState(ladder));
-            }
+			if (hitInfo) {
+				ActorEnemy enemy = hitInfo.collider.gameObject.GetComponent<ActorEnemy>();
+				if (enemy) {
+					if (enemy.GetType() == typeof(FootEnemy)) { arg_actor.OnDamaged(); }
+					else { enemy.OnDamaged(); }
+				}
+			}
 
-        }
+			m_elapsedTime += Time.deltaTime;
 
-        /// <summary>
-        /// ステート終了時に一度だけ呼ばれる
-        /// </summary>
-        /// <param name="arg_actor"></param>
-        public void OnExit(ActorBuddy arg_actor)
-        {
+			if (m_elapsedTime >= m_attackTime) {
+				arg_actor.m_currentState = m_stateBuffer;
+				this.OnExit(arg_actor);
+			}
 
-        }
-    }
+		}
+
+		/// <summary>
+		/// ステート終了時に一度だけ呼ばれる
+		/// </summary>
+		/// <param name="arg_actor"></param>
+		public void OnExit(ActorBuddy arg_actor) {
+
+		}
+	}
 }

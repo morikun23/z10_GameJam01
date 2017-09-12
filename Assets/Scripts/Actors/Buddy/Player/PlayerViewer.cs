@@ -17,8 +17,14 @@ namespace Z10 {
 		public void UpdateByFrame(Player arg_player) {
 			ViewDirection(arg_player.m_direction);
             ViewStateAnimation(arg_player.m_currentState);
-            
 
+			//無敵時間中は点滅させる
+			if (arg_player.m_isStrongMode) {
+				m_spriteRenderer.enabled = !m_spriteRenderer.enabled;
+			}
+			else if(!m_spriteRenderer.enabled){
+				m_spriteRenderer.enabled = true;
+			}
 
         }
 

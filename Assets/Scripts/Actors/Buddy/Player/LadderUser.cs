@@ -5,9 +5,13 @@ using System.Linq;
 
 namespace Z10 {
 	public class LadderUser : ActorBase {
-		
+
+		[HideInInspector]
 		//梯子を使用している状態か
 		public bool m_isLadderUsing;
+
+		[HideInInspector]
+		public Ladder m_usingLadder;
 
 		//最低フロアのときの座標
 		private const float LOWEST_FLOOR_Y = -5.5f;
