@@ -55,8 +55,10 @@ namespace Z10 {
 		/// <param name="arg_floor">置く階</param>
 		/// <param name="arg_horizontal">置くx座標</param>
 		public Ladder PutLadder(int arg_floor , float arg_horizontal) {
+
 			Ladder ladder = FindFreeLadder();
-			if (ladder) {
+
+            if (ladder) {
 				float vertical = -6.1f + (arg_floor - 1) * Stage.FLOOR_HEIGHT;
 
 				if (IsLadderExist(arg_horizontal,vertical)) return null;
@@ -86,4 +88,5 @@ namespace Z10 {
 		}
 
 	}
+
 }

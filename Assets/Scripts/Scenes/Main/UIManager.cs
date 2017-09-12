@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Linq;
 
 namespace Z10
 {
     public class UIManager : MonoBehaviour
     {
+
+        Player player_Script;
 
         //スコアの表示先、１桁目のオブジェクト
         GameObject score_obj,score_first;
@@ -32,6 +35,8 @@ namespace Z10
         // Use this for initialization
         void Start()
         {
+
+            player_Script = GameObject.FindObjectOfType<Player>();
 
             score_obj = GameObject.Find("Score");
             score_first = GameObject.Find("score_number");
@@ -62,27 +67,20 @@ namespace Z10
         void Update()
         {
 
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (score_obj)
             {
-                if (score_obj)
-                {
-                    var random = Random.Range(1, 9000000);
-                    scoreView(random);
-                }
+                //scoreView(MainScene.m_gameScore.totalScore);
+                scoreView(0);
+            }
 
-                if (hashigo_count_obj)
-                {
-                    var randomrondamo = Random.Range(0, 4);
-                    hashigoView(randomrondamo);
-                }
+            if (hashigo_count_obj)
+            {
+                hashigoView(player_Script.m_ladderHolder.GetLaddersActive().Where(_ => !_.gameObject.activeInHierarchy).ToList().Count);
+            }
 
-                if (life_obj)
-                {
-                    var randomr = Random.Range(0, 4);
-                    Debug.Log("Life = " + randomr);
-                    lifeView(randomr);
-                }
-
+            if (life_obj)
+            {
+                lifeView(player_Script.m_hp);
             }
 
         }
@@ -90,6 +88,7 @@ namespace Z10
         //はしご使用状況更新
         void hashigoView(int count)
         {
+
             hashigo_count_obj.GetComponent<Image>().sprite = hashigo_count_sprites[count];
         }
 
@@ -123,11 +122,17 @@ namespace Z10
             
             List<int> score_list = new List<int>();
 
-            while (score_buff != 0)
+            if (score_buff == 0)
             {
-                score = score_buff % 10;
-                score_buff = score_buff / 10;
-                score_list.Add(score);
+                score_list.Add(0);
+            }
+            else {
+                while (score_buff != 0)
+                {
+                    score = score_buff % 10;
+                    score_buff = score_buff / 10;
+                    score_list.Add(score);
+                }
             }
 
             //要素数0には１桁目の値が格納

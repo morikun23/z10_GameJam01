@@ -42,8 +42,16 @@ namespace Z10 {
                     arg_currentCommand.GetType() == typeof(BuddyDownstairsState)) {
 				m_animator.Play("Stairs");
 			}
-			else {
-				m_animator.Play("Idle");
+            else if (arg_currentCommand.GetType() == typeof(BuddyUpAttackState))
+            {
+                m_animator.Play("UpAttack");
+            }
+            else if (arg_currentCommand.GetType() == typeof(BuddyDownAttackState))
+            {
+                m_animator.Play("DownAttack");
+            }
+            else {
+				m_animator.Play("Run");
 			}
 		}
 	}
