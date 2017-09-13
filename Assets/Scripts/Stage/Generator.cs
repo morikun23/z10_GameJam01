@@ -62,6 +62,7 @@ namespace Z10 {
 			ActorEnemy emergedEnemy = m_existEnemies[i].GetComponent<ActorEnemy>();
 			emergedEnemy.m_direction = m_defaultDirection;
 			emergedEnemy.m_currentFloor = m_defaultFloor;
+			emergedEnemy.m_speed += Random.Range(0 , 0.02f);
 			emergedEnemy.Initialize();
 		}
 
