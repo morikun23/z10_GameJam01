@@ -57,11 +57,14 @@ namespace Z10 {
 
 		public void CallEnemyIsBroken(ActorEnemy arg_enemy) {
 			m_enemyBrokenData.m_enemyBrokenCount += 1;
-			if(m_enemyBrokenData.m_enemyBrokenCount % 5 == 0) {
-				m_enemyBrokenData.m_currentScore += 5;
-			}
+            //if(m_enemyBrokenData.m_enemyBrokenCount % 5 == 0) {
+            //m_enemyBrokenData.m_currentScore += 5;
+            //}
 
-			if(m_enemyBrokenData.m_enemyBrokenCount % 10 == 0) {
+            m_enemyBrokenData.m_currentScore += 10;
+
+
+            if (m_enemyBrokenData.m_enemyBrokenCount % 10 == 0) {
 				Instantiate(m_itemBox , new Vector3(-18 , 1.6f) , Quaternion.identity);
 			}
 
@@ -71,7 +74,7 @@ namespace Z10 {
 			//放出量を上げる
 			m_enemyBrokenData.m_effect.GetComponent<ParticleSystem>().emission.SetBursts(new ParticleSystem.Burst[]{
 				new ParticleSystem.Burst(0, 0),
-				new ParticleSystem.Burst(0, (short)(5 + (m_enemyBrokenData.m_enemyBrokenCount/2)))
+				new ParticleSystem.Burst(0, (short)((arg_enemy.m_score / 10) + (m_enemyBrokenData.m_enemyBrokenCount/2)))
 				}
 			);
 
