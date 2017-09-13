@@ -71,7 +71,7 @@ namespace Z10 {
 			//放出量を上げる
 			m_enemyBrokenData.m_effect.GetComponent<ParticleSystem>().emission.SetBursts(new ParticleSystem.Burst[]{
 				new ParticleSystem.Burst(0, 0),
-				new ParticleSystem.Burst(0, (short)(5 + (m_enemyBrokenData.m_enemyBrokenCount/4)))
+				new ParticleSystem.Burst(0, (short)(5 + (m_enemyBrokenData.m_enemyBrokenCount/2)))
 				}
 			);
 

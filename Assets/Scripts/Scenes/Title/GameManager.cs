@@ -75,7 +75,7 @@ namespace Z10.Title {
 		// Update is called once per frame
 		void Update() {
 
-            if (state != TitleState.toInput && Input.GetKeyDown(KeyCode.Space)) Skip();
+            if (state != TitleState.toInput && Input.GetKeyUp(KeyCode.Space)) Skip();
 
             switch (state)
             {

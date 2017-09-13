@@ -70,11 +70,12 @@ namespace Z10 {
 
 			string pass = "Prefabs/Actor/Enemy/";
 
-			int num = Random.Range(0 , 10);
+			int num = Random.Range(0 , 20);
 
-			if (num < 1) { pass += "FootEnemy"; }
-			else if (num < 2) { pass += "HeadEnemy"; }
-			else{ pass += "StandardEnemy"; }
+			if (num < 1) { pass += "GoldenEnemy"; }
+			else if (num < 3) { pass += "HeadEnemy"; }
+            else if (num < 5) { pass += "FootEnemy"; }
+            else { pass += "StandardEnemy"; }
 			return Resources.Load<GameObject>(pass);
 		}
 
